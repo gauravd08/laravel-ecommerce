@@ -2,7 +2,7 @@
 <meta name="description" content="<?= isset($meta_info['meta_description']) ? $meta_info['meta_description']  : ''; ?>">
 <meta name="keywords" content="<?= isset($meta_info['meta_keywords']) ? $meta_info['meta_keywords']  : '' ?>">
 
-<title>Divisima | eCommerce Template</title>
+<title>Divisima | eCommerce Template con</title>
 <meta charset="UTF-8">
 <meta name="description" content=" Divisima | eCommerce Template">
 <meta name="keywords" content="divisima, eCommerce, creative, html">
