@@ -12,3 +12,6 @@
 */
 
 Route::get('/', 'Frontend\PagesController@home');
+
+Route::get('/user/createRoles', 'Auth\AuthController@createRoles');
+Route::get('/user/createUsers', 'Auth\AuthController@createUsers');
