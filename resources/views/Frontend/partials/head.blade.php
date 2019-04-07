@@ -23,6 +23,9 @@
 <link rel="stylesheet" href="/assets/frontend/css/animate.css"/>
 <link rel="stylesheet" href="/assets/frontend/css/style.css"/>
 
+<!-- fanybox -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.css" rel="stylesheet" type="text/css" />
+
 <!-- custom css -->
 <link href="/assets/frontend/css/custom.css" rel="stylesheet" type="text/css"/>
 

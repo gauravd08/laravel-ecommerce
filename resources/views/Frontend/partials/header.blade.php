@@ -11,7 +11,7 @@
 				<div class="col-lg-2 text-center text-lg-left">
 					<!-- logo -->
 					<a href="./index.html" class="site-logo">
-						<img src="img/logo.png" alt="">
+						<img src="/assets/frontend/img/logo.png" alt="">
 					</a>
 				</div>
 				<div class="col-xl-6 col-lg-5">
@@ -24,7 +24,7 @@
 					<div class="user-panel">
 						<div class="up-item">
 							<i class="flaticon-profile"></i>
-							<a href="#">Sign</a> In or <a href="#">Create Account</a>
+							<a id="memberpopup" href="/member">Sign In or Create Account</a>
 						</div>
 						<div class="up-item">
 							<div class="shopping-card">

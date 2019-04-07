@@ -182,32 +182,39 @@ class AuthController extends \App\Http\Controllers\Controller
      */
     public function change_password_member(Request $request)
     {
-            $validator = Validator::make($request->all(), [
-                    'old_password' => 'required',
-                    'new_password' => 'required | min:6',
-                    'confirm_password' => 'required|same:new_password',
-            ]);
+        $validator = Validator::make($request->all(), [
+                'old_password' => 'required',
+                'new_password' => 'required | min:6',
+                'confirm_password' => 'required|same:new_password',
+        ]);
 
-            if ($validator->passes())
+        if ($validator->passes())
+        {
+            if(Hash::check($request->old_password, Auth::user()->password))
             {
-                if(Hash::check($request->old_password, Auth::user()->password))
-                {
-                    $user = Auth::user();
-                    $user->password = bcrypt($request->get('new_password'));
-                    $user->save();
-                    
-                    return response(['status' => 1, 'message' => 'Password updated successfully!' ]);
-                }
-                else
-                {
-                    return response(['status' => 0, 'message' => "Old password didn't match!"]);
-                }
+                $user = Auth::user();
+                $user->password = bcrypt($request->get('new_password'));
+                $user->save();
+                
+                return response(['status' => 1, 'message' => 'Password updated successfully!' ]);
             }
             else
             {
-                return response(['status' => 0, 'message' => "Unable to save!!", 'errors' => $validator->errors() ]);
+                return response(['status' => 0, 'message' => "Old password didn't match!"]);
             }
         }
+        else
+        {
+            return response(['status' => 0, 'message' => "Unable to save!!", 'errors' => $validator->errors() ]);
+        }
+    }
 
-    
+        /**
+         * Member Login
+         */
+
+    public function memberLogin()
+    {
+        return view('Auth.memberlogin');
+    }    
 }

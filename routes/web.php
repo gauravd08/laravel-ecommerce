@@ -21,6 +21,16 @@ Route::get('admin', 'Auth\AuthController@login');
 Route::post('login', 'Auth\AuthController@login');
 Route::get('logout', 'Auth\AuthController@logout');
 
+Route::get('member', 'Auth\AuthController@memberLogin');
+
+//Login with google
+Route::get('login/google', 'Auth\SocialAuthController@redirectToGoogle');
+Route::get('login/google/callback', 'Auth\SocialAuthController@handleGoogleCallback');
+
+//Login with facebook
+Route::get('login/facebook', 'Auth\SocialAuthController@redirectToFacebook');
+Route::get('login/facebook/callback', 'Auth\SocialAuthController@handleFacebookCallback');
+
 //admin routes
 Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function()
 {
