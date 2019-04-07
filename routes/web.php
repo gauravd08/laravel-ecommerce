@@ -38,6 +38,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function()
     Route::get('pages', 'Admin\PagesController@index')->name('pageSummary');
     Route::any('ajax-pages', 'Admin\PagesController@ajaxIndex');
     Route::any('pages/edit/{id}', 'Admin\PagesController@edit')->name('editPage');
+
+        //Graphics
+    Route::get('graphics', 'Admin\GraphicsController@index')->name('graphicSummary');
+    Route::any('ajax-graphics', 'Admin\GraphicsController@ajaxIndex');
+    Route::any('graphics/add', 'Admin\GraphicsController@add')->name('addGraphic');
+    Route::any('graphics/edit/{id}', 'Admin\GraphicsController@edit')->name('editGraphic');
+    Route::any('graphics/delete/{id}', 'Admin\GraphicsController@delete');
+    Route::any('graphics/toggle/status/{model}/{status}', 'Admin\GraphicsController@toggleStatus');
+    
 });
 
 //member routes
