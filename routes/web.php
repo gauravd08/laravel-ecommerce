@@ -39,13 +39,21 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function()
     Route::any('ajax-pages', 'Admin\PagesController@ajaxIndex');
     Route::any('pages/edit/{id}', 'Admin\PagesController@edit')->name('editPage');
 
-        //Graphics
+    //Graphics
     Route::get('graphics', 'Admin\GraphicsController@index')->name('graphicSummary');
     Route::any('ajax-graphics', 'Admin\GraphicsController@ajaxIndex');
     Route::any('graphics/add', 'Admin\GraphicsController@add')->name('addGraphic');
     Route::any('graphics/edit/{id}', 'Admin\GraphicsController@edit')->name('editGraphic');
     Route::any('graphics/delete/{id}', 'Admin\GraphicsController@delete');
     Route::any('graphics/toggle/status/{model}/{status}', 'Admin\GraphicsController@toggleStatus');
+
+    //categories
+    Route::get('categories', 'Admin\CategoriesController@index')->name('categoriesSummary');
+    Route::any('ajax-categories', 'Admin\CategoriesController@ajaxIndex');
+    Route::any('category/add', 'Admin\CategoriesController@add')->name('addCategory');
+    Route::any('category/edit/{id}', 'Admin\CategoriesController@edit')->name('editCategory');
+    Route::any('category/delete/{id}', 'Admin\CategoriesController@delete');
+    Route::any('categories/toggle/status/{model}/{status}', 'Admin\CategoriesController@toggleStatus');
     
 });
 

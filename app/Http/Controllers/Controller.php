@@ -63,4 +63,19 @@ class Controller extends BaseController
         
         return $filename;
     }
+
+    protected function createSlug($name)
+    {
+        if ($name == trim($name) && strpos($name, ' ') !== false) 
+        {
+            $name = explode(' ', $name);
+            foreach($name as $value)
+            {
+                $arr[] = strtolower($value);
+            }
+        }
+        dd($arr);
+        exit;
+
+    }
 }

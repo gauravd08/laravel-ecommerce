@@ -10,6 +10,14 @@ class AdminMenu
             'children' => [
             ]
         ],
+        'categories' => [
+            'title'       => 'Categories',
+            'link'        => 'categories',
+            'icon'        => 'icon-grid',
+            'selection'  => ['categories'],
+            'children'  =>  [
+            ]
+        ],
         'faq_categories' => [
             'title'       => 'Faq Categories',
             'link'        => 'faq-categories',
