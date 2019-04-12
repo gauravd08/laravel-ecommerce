@@ -26,12 +26,12 @@
                         <div class="row mt-20">
                             <div class="col-md-12 col-sm-6 col-xs-12">
                                 
-                                    <div class="form-group form-md-line-input has-info">
-                                            {{Form::select('parent_id', $parentCategoryList, isset($record->parent_id) ? $record->parent_id : '', ['class' => 'form-control', 
-                                                'placeholder' => '-'])}}
-                                            <label for="form_control_1">Parent Category</label>
-                                            <span class="help-block"><small class="text-danger">{{ $errors->first('parent_id') }}</small></span>
-                                    </div>
+                                <div class="form-group form-md-line-input has-info">
+                                        {{Form::select('parent_id', $parentCategoryList, isset($record->parent_id) ? $record->parent_id : '', ['class' => 'form-control', 
+                                            'placeholder' => '-'])}}
+                                        <label for="form_control_1">Parent Category</label>
+                                        <span class="help-block"><small class="text-danger">{{ $errors->first('parent_id') }}</small></span>
+                                </div>
 
                                 <div class="form-group form-md-line-input form-group {{ $errors->has('category_name') ? ' has-error' : '' }}">
                                     <input type="text" class="form-control" id="form_control_1" name="category_name" 
@@ -64,7 +64,7 @@
                                                     <span class="box"></span> Active </label>
                                             </div>
                                         </div>
-                                    </div>
+                                </div>
 
 
                             </div>

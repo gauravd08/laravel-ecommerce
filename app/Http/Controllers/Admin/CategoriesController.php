@@ -65,13 +65,13 @@ class CategoriesController extends \App\Http\Controllers\Controller
                 $nestedData['description'] = $record->description;
                 if($record->is_active == 1)
                 {
-                    $nestedData['is_active'] ='<a href="/admin/categories/toggle/status/'.$record->id.'/'.$record->is_active.' " class="btn btn-success"> Active </a>';
+                    $nestedData['is_active'] ='<a href="/admin/category/toggle/status/'.$record->id.'/'.$record->is_active.' " class="btn btn-success"> Active </a>';
                 }
                 else
                 {
-                    $nestedData['is_active'] = '<a href="/admin/categories/toggle/status/'.$record->id.'/'.$record->is_active.' " class="btn btn-danger"> Inactive </a>';
+                    $nestedData['is_active'] = '<a href="/admin/category/toggle/status/'.$record->id.'/'.$record->is_active.' " class="btn btn-danger"> Inactive </a>';
                 }
-                $nestedData['action'] = '<a href="/admin/categories/edit/'. $record->id .'?'.CSS_JS_VER.'" title="View" class="icon blue"><i class=" fa fa-edit"></i></a> <a onclick="return confirm(`Are you sure you want to delete this item?`)" href="/admin/graphics/delete/'. $record->id.'" title="View" class="icon blue"><i class="fa fa-trash fa-lg"></i></a>';
+                $nestedData['action'] = '<a href="/admin/category/edit/'. $record->id .'?'.CSS_JS_VER.'" title="View" class="icon blue"><i class=" fa fa-edit"></i></a> <a onclick="return confirm(`Are you sure you want to delete this item?`)" href="/admin/graphics/delete/'. $record->id.'" title="View" class="icon blue"><i class="fa fa-trash fa-lg"></i></a>';
                 $data[] = $nestedData;
             }
         }
@@ -149,8 +149,11 @@ class CategoriesController extends \App\Http\Controllers\Controller
         }
         
         $title = "Edit Category";
+        //get list of all parent categories
+        $list = new Category();
+        $parentCategoryList = $list->getParentCategories();
         
-        return view('Admin.Categories.form')->with(compact('record', 'title'));
+        return view('Admin.Categories.form')->with(compact('record', 'title', 'parentCategoryList'));
     }
     
     //Delete Record

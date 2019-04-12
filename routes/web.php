@@ -53,7 +53,23 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function()
     Route::any('category/add', 'Admin\CategoriesController@add')->name('addCategory');
     Route::any('category/edit/{id}', 'Admin\CategoriesController@edit')->name('editCategory');
     Route::any('category/delete/{id}', 'Admin\CategoriesController@delete');
-    Route::any('categories/toggle/status/{model}/{status}', 'Admin\CategoriesController@toggleStatus');
+    Route::any('category/toggle/status/{model}/{status}', 'Admin\CategoriesController@toggleStatus');
+
+    //Brands
+    Route::get('brands', 'Admin\BrandsController@index')->name('brandsSummary');
+    Route::any('ajax-brands', 'Admin\BrandsController@ajaxIndex');
+    Route::any('brand/add', 'Admin\BrandsController@add')->name('addBrand');
+    Route::any('brand/edit/{id}', 'Admin\BrandsController@edit')->name('editBrand');
+    Route::any('brand/delete/{id}', 'Admin\BrandsController@delete');
+    Route::any('brand/toggle/status/{model}/{status}', 'Admin\BrandsController@toggleStatus');
+
+    //Products
+    Route::get('products', 'Admin\ProductsController@index')->name('productsSummary');
+    Route::any('ajax-products', 'Admin\ProductsController@ajaxIndex');
+    Route::any('product/add', 'Admin\ProductsController@add')->name('addproduct');
+    Route::any('product/edit/{id}', 'Admin\ProductsController@edit')->name('editproduct');
+    Route::any('product/delete/{id}', 'Admin\ProductsController@delete');
+    Route::any('product/toggle/status/{model}/{status}', 'Admin\ProductsController@toggleStatus');
     
 });
 

@@ -14,7 +14,23 @@ class AdminMenu
             'title'       => 'Categories',
             'link'        => 'categories',
             'icon'        => 'icon-grid',
-            'selection'  => ['categories'],
+            'selection'  => ['categories', 'addCategory', 'editCategory'],
+            'children'  =>  [
+            ]
+        ],
+        'brands' => [
+            'title'       => 'Brands',
+            'link'        => 'brands',
+            'icon'        => 'fas fa-copyright',
+            'selection'  => ['brands', 'addBrand', 'editBrand'],
+            'children'  =>  [
+            ]
+        ],
+        'products' => [
+            'title'       => 'Products',
+            'link'        => 'products',
+            'icon'        => 'fas fa-copyright',
+            'selection'  => ['products', 'addProduct', 'editProduct'],
             'children'  =>  [
             ]
         ],

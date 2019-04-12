@@ -64,6 +64,10 @@ class Controller extends BaseController
         return $filename;
     }
 
+    /**
+     * create unique slug
+     * @param string $name
+     */
     protected function createSlug($name)
     {
         if ($name == trim($name) && strpos($name, ' ') !== false) 
@@ -73,9 +77,13 @@ class Controller extends BaseController
             {
                 $arr[] = strtolower($value);
             }
+            
+            $slug = implode('-', $arr);
         }
-        dd($arr);
-        exit;
-
+        else
+        {
+            $slug = strtolower($name);
+        }
+        return $slug;
     }
 }
