@@ -113,11 +113,23 @@
                                     <input type="text" class="form-control" readonly  name="xxl" style="width: 30% ;float:left;margin-left:4%"
                                     value="{{isset($record->xxl) ? $record->xxl : 'xxl'}}" placeholder="Enter quantity">
                                     <label for="form_control_1">Quantity</label>
-                                    <input type="number" class="form-control"  name="xll_quantity" style="width: 30% ;float:left;margin-left:4%"
-                                    value="{{isset($record->xll_quantity) ? $record->xll_quantity : old('xll_quantity')}}" placeholder="Enter quantity">
+                                    <input type="number" class="form-control"  name="xxl_quantity" style="width: 30% ;float:left;margin-left:4%"
+                                    value="{{isset($record->xxl_quantity) ? $record->xxl_quantity : old('xxl_quantity')}}" placeholder="Enter quantity">
                                     
                                     <span class="help-block"><small class="text-danger">{{ $errors->first('brand_id') }}</small></span>
                                 </div>
+
+                                <div class="form-group form-md-line-input {{ $errors->has('image') ? ' has-error' : '' }}">
+                                    <label>Image</label>
+                                    @if(isset($record->image))
+                                    <span class="pull-right file-links">
+                                        <a href="/{{GRAPHIC_UPLOAD_PATH.$record->type.'/'.$record->image }}?{{time()}}" data-fancybox="images"><i class="icon-magnifier"></i></a>
+                                    </span>
+                                    @endif
+                                    <input class="form-control" name="images[]" type="file" multiple>
+                                    <span class="help-block" id="hint-block"><small class="text-danger">{{ $errors->first('image') }}</small></span>
+                                </div>
+
 
                                 <div class="form-group form-md-checkboxes">
                                     <div class="md-checkbox-list">

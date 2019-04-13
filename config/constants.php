@@ -15,6 +15,7 @@ define('COOKIES_PAGE', '/admin');
 //Upload Paths
 define('PAGE_IMAGE_UPLOAD_PATH', 'assets/frontend/img/pages/');
 define('GRAPHIC_UPLOAD_PATH', 'assets/frontend/img/graphics/');
+define('PRODUCT_IMAGE_UPLOAD_PATH', 'assets/frontend/img/products/');
 
 //ABOUT US IMAGES
 define('ABOUT_US_IMAGE_1', 1);

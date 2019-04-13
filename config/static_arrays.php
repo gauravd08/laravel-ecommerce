@@ -31,4 +31,6 @@ class StaticArray {
         'xs' => 'XS', 's' => 'S', 'm' => 'M', 'l' => 'L', 'xl' => 'XL', 'xxl' => 'XXL'
     ];
 
+    //Product images
+
 }
