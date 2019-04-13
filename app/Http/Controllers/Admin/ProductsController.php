@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Support\Facades\Input;
@@ -14,7 +15,11 @@ class ProductsController extends \App\Http\Controllers\Controller
      * Validation Rules
      */
     public $rules = array(
-        'brand_name'          => ['required'],
+        'category_id'          => ['required'],
+        'brand_id'          => ['required'],
+        'product_name'          => ['required'],
+        'description'          => ['required'],
+        'price'                => ['required']
     );
 
     
@@ -97,12 +102,12 @@ class ProductsController extends \App\Http\Controllers\Controller
         if($request->method() == 'POST')
         {
             $validator = Validator::make(Input::all(), $this->rules);
-            $record = new Brand();
+            $record = new Product();
             $record->fill(Input::all());
-
+            $record->slug = $this->createSlug($request->product_name);
             if ($validator->passes() && $record->save())
             {
-                return redirect('/admin/brands')->with(['level' => 'success', 'content' => "Record added successfully"]);
+                return redirect('/admin/products')->with(['level' => 'success', 'content' => "Record added successfully"]);
             }
             else
             {
@@ -113,8 +118,9 @@ class ProductsController extends \App\Http\Controllers\Controller
             
         $title = "Add Product";
         $allCategories = $this->_getCategories();
+        $allBrands = $this->_getBrands();
 
-        return view('Admin.Products.form')->with(compact('title', 'allCategories'));
+        return view('Admin.Products.form')->with(compact('title', 'allCategories', 'allBrands'));
 	}
 	
 	 /**
@@ -169,5 +175,10 @@ class ProductsController extends \App\Http\Controllers\Controller
     private function _getCategories()
     {
         return Category::where('parent_id', '!=', 0)->pluck('category_name', 'id'); 
+    }
+
+    private function _getBrands()
+    {
+        return Brand::pluck('brand_name', 'id'); 
     }
 }

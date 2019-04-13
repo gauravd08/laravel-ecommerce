@@ -25,4 +25,10 @@ class StaticArray {
     public static $graphic_types = [
         GRAPHIC_TYPE_HOME_BANNER => 'Home Banner',
     ];
+
+    //clothing size
+    public static $clothing_sizes = [
+        'xs' => 'XS', 's' => 'S', 'm' => 'M', 'l' => 'L', 'xl' => 'XL', 'xxl' => 'XXL'
+    ];
+
 }
