@@ -5,6 +5,11 @@ class Category extends AppModel
 {
     public function getParentCategories()
     {
-        return Category::pluck('category_name', 'id')->where('pareant_id', '=', 0); 
+        return Category::where('parent_id', '=', 0)->pluck('category_name', 'id'); 
+    }
+
+    public function getCategories()
+    {
+        return Category::where('parent_id', '!=', 0)->pluck('category_name', 'id'); 
     }
 }

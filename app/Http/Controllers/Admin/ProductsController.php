@@ -43,7 +43,7 @@ class ProductsController extends \App\Http\Controllers\Controller
      */
     public function ajaxIndex(Request $request)
     {
-        $columns = array('id', 'brand_name', 'is_active', 'action');
+        $columns = array('id', 'product_name', 'category_id', 'brand_id', 'price', 'is_active', 'action');
 
         $totalFiltered = $totalData = Product::count();
         $limit = $request->input('length');
@@ -53,33 +53,41 @@ class ProductsController extends \App\Http\Controllers\Controller
 
         if(empty($request->input('search.value')))
         {
-            $records = Product::offset($start)->limit($limit)->orderBy($order, $dir)->get();
+            $records = Product::with('ProductImage', 'ProductSpecification')->offset($start)->limit($limit)->orderBy($order, $dir)->get();
         }
         else
         {
             $search = $request->input('search.value');
-            $records = Product::where('brand_name', 'LIKE', "%{$search}%")->offset($start)->limit($limit)->orderBy($order, $dir)->get();
+            $records = Product::with('ProductImage', 'ProductSpecification')->where('product_name', 'LIKE', "%{$search}%")->offset($start)->limit($limit)->orderBy($order, $dir)->get();
             $totalFiltered = $records->count();
         }
 
+        $categories = new Category();
+        $allCategories = $categories->getCategories();
+
+        $brands = New Brand();
+        $allBrands = $brands->getBrands();
         $data = array();
         if (!empty($records))
         {
             foreach ($records as $record)
             {
                 $nestedData['id'] = $record->id;
-                $nestedData['brand_name'] = $record->brand_name;
+                $nestedData['product_name'] = $record->product_name;
+                $nestedData['category_id'] = $allCategories[$record->category_id];
+                $nestedData['brand_id'] = $allBrands[$record->brand_id];
+                $nestedData['price'] = $record->price;
                 if($record->is_active == 1)
                 {
-                    $nestedData['is_active'] ='<a href="/admin/brand/toggle/status/'.$record->id.'/'.$record->is_active.' " class="btn btn-success"> Active </a>';
+                    $nestedData['is_active'] ='<a href="/admin/product/toggle/status/'.$record->id.'/'.$record->is_active.' " class="btn btn-success"> Active </a>';
                 }
                 else
                 {
-                    $nestedData['is_active'] = '<a href="/admin/brand/toggle/status/'.$record->id.'/'.$record->is_active.' " class="btn btn-danger"> Inactive </a>';
+                    $nestedData['is_active'] = '<a href="/admin/product/toggle/status/'.$record->id.'/'.$record->is_active.' " class="btn btn-danger"> Inactive </a>';
                 }
-                $nestedData['action'] = '<a href="/admin/brand/edit/'. $record->id .'" title="View" class="icon blue"><i class=" fa fa-edit fa-lg"></i></a> 
+                $nestedData['action'] = '<a href="/admin/product/edit/'. $record->id .'" title="View" class="icon blue"><i class=" fa fa-edit fa-lg"></i></a> 
                                          &nbsp;
-                                     <a class="icon blue deleteRecord" data-id= '.$record->id.' href="/admin/brand/delete/'.$record->id.'"><i class="fa fa-trash fa-lg"></i></a>';                      
+                                     <a class="icon blue deleteRecord" data-id= '.$record->id.' href="/admin/product/delete/'.$record->id.'"><i class="fa fa-trash fa-lg"></i></a>';                      
                
                 $data[] = $nestedData;
             }
@@ -104,6 +112,8 @@ class ProductsController extends \App\Http\Controllers\Controller
 	{
         if($request->method() == 'POST')
         {
+            $this->rules['image'] = 'required|image|mimes:jpeg,png,jpg|dimensions:min_width=1000,min_height=1358';
+
             //dd($request->images[0]);
             $validator = Validator::make(Input::all(), $this->rules);
             $record = new Product();
@@ -156,8 +166,11 @@ class ProductsController extends \App\Http\Controllers\Controller
         }
             
         $title = "Add Product";
-        $allCategories = $this->_getCategories();
-        $allBrands = $this->_getBrands();
+        $categories = new Category();
+        $allCategories = $categories->getCategories();
+
+        $brands = New Brand();
+        $allBrands = $brands->getBrands();
 
         return view('Admin.Products.form')->with(compact('title', 'allCategories', 'allBrands'));
 	}
@@ -170,8 +183,8 @@ class ProductsController extends \App\Http\Controllers\Controller
 	 */
     public function edit($id, Request $request)
     {
-        $record = Brand::findOrFail($id);
-
+        $record = Product::with('ProductImage', 'ProductSpecification')->findOrFail($id);
+        
         if($request->method() == 'POST')
         {
             $validator = Validator::make(Input::all(), $this->rules);
@@ -189,8 +202,12 @@ class ProductsController extends \App\Http\Controllers\Controller
         }
         
         $title = "Edit Faq Category";
-        
-        return view('Admin.brands.form')->with(compact('record', 'title'));
+        $categories = new Category();
+        $allCategories = $categories->getCategories();
+
+        $brands = New Brand();
+        $allBrands = $brands->getBrands();
+        return view('Admin.Products.form')->with(compact('record', 'title', 'allCategories', 'allBrands'));
     }
     
     //Delete Record
@@ -202,7 +219,7 @@ class ProductsController extends \App\Http\Controllers\Controller
     }
 
     //toggle active state
-    public function toggleStatus(Brand $model, $status)
+    public function toggleStatus(Product $model, $status)
     {
         $model->is_active = !$status;
 
@@ -211,15 +228,6 @@ class ProductsController extends \App\Http\Controllers\Controller
         return back()->with(['level' => 'success', 'content' => "Status updated successfully"]);
     }
 
-    private function _getCategories()
-    {
-        return Category::where('parent_id', '!=', 0)->pluck('category_name', 'id'); 
-    }
-
-    private function _getBrands()
-    {
-        return Brand::pluck('brand_name', 'id'); 
-    }
 
     private function _uploadProductImage($image, $path, $imageName, $width, $height)
     {

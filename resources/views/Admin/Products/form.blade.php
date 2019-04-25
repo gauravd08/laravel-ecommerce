@@ -64,7 +64,7 @@
                                     value="{{isset($record->xs) ? $record->xs : 'xs'}}" placeholder="Enter quantity">
                                     <label for="form_control_1">Quantity</label>
                                     <input type="number" class="form-control"  name="xs_quantity" style="width: 11% ;float:left;margin-left:4%"
-                                    value="{{isset($record->xs_quantity) ? $record->xs_quantity : old('xs_quantity')}}" placeholder="Enter quantity">
+                                    value="{{isset($record->ProductSpecification[0]->xs_quantity) ? $record->ProductSpecification[0]->xs_quantity : old('xs_quantity')}}" placeholder="Enter quantity">
                                     
                                     <span class="help-block"><small class="text-danger">{{ $errors->first('brand_id') }}</small></span>
                                 </div>
@@ -73,7 +73,7 @@
                                     <input type="text" class="form-control" readonly  name="s" style="width: 3% ;float:left;margin-left:4%"
                                     value="{{isset($record->s) ? $record->s : 's'}}" placeholder="Enter quantity">
                                     <input type="number" class="form-control"  name="s_quantity" style="width: 11% ;float:left;margin-left:4%"
-                                    value="{{isset($record->s_quantity) ? $record->s_quantity : old('s_quantity')}}" placeholder="Enter quantity">
+                                    value="{{isset($record->ProductSpecification[0]->s_quantity) ? $record->ProductSpecification[0]->s_quantity : old('s_quantity')}}" placeholder="Enter quantity">
                                     
                                     <span class="help-block"><small class="text-danger">{{ $errors->first('brand_id') }}</small></span>
                                 </div>
@@ -82,7 +82,7 @@
                                     <input type="text" class="form-control" readonly  name="m" style="width: 3% ;float:left;margin-left:4%"
                                     value="{{isset($record->m) ? $record->xs : 'm'}}" placeholder="Enter quantity">
                                     <input type="number" class="form-control"  name="m_quantity" style="width: 11% ;float:left;margin-left:4%"
-                                    value="{{isset($record->m_quantity) ? $record->m_quantity : old('m_quantity')}}" placeholder="Enter quantity">
+                                    value="{{isset($record->ProductSpecification[0]->m_quantity) ? $record->ProductSpecification[0]->m_quantity : old('m_quantity')}}" placeholder="Enter quantity">
                                     
                                     <span class="help-block"><small class="text-danger">{{ $errors->first('brand_id') }}</small></span>
                                 </div>
@@ -91,7 +91,7 @@
                                     <input type="text" class="form-control" readonly  name="l" style="width: 3% ;float:left;margin-left:4%"
                                     value="{{isset($record->l) ? $record->l : 'l'}}" placeholder="Enter quantity">
                                     <input type="number" class="form-control"  name="l_quantity" style="width: 11% ;float:left;margin-left:4%"
-                                    value="{{isset($record->l_quantity) ? $record->l_quantity : old('xs_quantity')}}" placeholder="Enter quantity">
+                                    value="{{isset($record->ProductSpecification[0]->l_quantity) ? $record->ProductSpecification[0]->l_quantity : old('xs_quantity')}}" placeholder="Enter quantity">
                                     
                                     <span class="help-block"><small class="text-danger">{{ $errors->first('brand_id') }}</small></span>
                                 </div>
@@ -100,7 +100,7 @@
                                     <input type="text" class="form-control" readonly  name="xl" style="width: 3% ;float:left;margin-left:4%"
                                     value="{{isset($record->xl) ? $record->x : 'xl'}}" placeholder="Enter quantity">
                                     <input type="number" class="form-control"  name="xl_quantity" style="width: 11% ;float:left;margin-left:4%"
-                                    value="{{isset($record->xl_quantity) ? $record->xl_quantity : old('xl_quantity')}}" placeholder="Enter quantity">
+                                    value="{{isset($record->ProductSpecification[0]->xl_quantity) ? $record->ProductSpecification[0]->xl_quantity : old('xl_quantity')}}" placeholder="Enter quantity">
                                     
                                     <span class="help-block"><small class="text-danger">{{ $errors->first('brand_id') }}</small></span>
                                 </div>
@@ -109,7 +109,7 @@
                                     <input type="text" class="form-control" readonly  name="xxl" style="width: 3% ;float:left;margin-left:4%"
                                     value="{{isset($record->xxl) ? $record->xxl : 'xxl'}}" placeholder="Enter quantity">
                                     <input type="number" class="form-control"  name="xxl_quantity" style="width: 11% ;float:left;margin-left:4%"
-                                    value="{{isset($record->xxl_quantity) ? $record->xxl_quantity : old('xxl_quantity')}}" placeholder="Enter quantity">
+                                    value="{{isset($record->ProductSpecification[0]->xxl_quantity) ? $record->ProductSpecification[0]->xxl_quantity : old('xxl_quantity')}}" placeholder="Enter quantity">
                                     
                                     <span class="help-block"><small class="text-danger">{{ $errors->first('brand_id') }}</small></span>
                                 </div>

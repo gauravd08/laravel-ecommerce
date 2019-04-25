@@ -32,6 +32,9 @@
                                 <tr>
                                     <th> Id </th>
                                     <th> Product Name </th>
+                                    <th> Category </th>
+                                    <th> Brand </th>
+                                    <th> Price </th>
                                     <th> Status </th>
                                     <th> Action </th>
                                 </tr>
@@ -57,7 +60,7 @@
             "language":
             {
                 "sSearch": "", 
-                'sSearchPlaceholder': "Search by brand name ",
+                'sSearchPlaceholder': "Search by product name ",
                 "processing": '<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>'
             },
             "serverSide": true,
@@ -72,12 +75,15 @@
             "columns":
                 [
                     {"data": "id"},
-                    {"data": "brand_name"},
+                    {"data": "product_name"},
+                    {"data": "category_id"},
+                    {"data": "brand_id"},
+                    {"data": "price"},
                     {"data": "is_active"},
                     {"data": "action"}
                 ],
             "columnDefs": [
-                {"className": "dt-center", "targets": [0,2]},
+                {"className": "dt-center", "targets": [0,4,5,6]},
                 {"orderable": false, "targets": [2]}
             ]
         });
