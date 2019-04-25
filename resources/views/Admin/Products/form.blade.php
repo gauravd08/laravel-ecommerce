@@ -66,7 +66,6 @@
                                     <input type="number" class="form-control"  name="xs_quantity" style="width: 11% ;float:left;margin-left:4%"
                                     value="{{isset($record->ProductSpecification[0]->xs_quantity) ? $record->ProductSpecification[0]->xs_quantity : old('xs_quantity')}}" placeholder="Enter quantity">
                                     
-                                    <span class="help-block"><small class="text-danger">{{ $errors->first('brand_id') }}</small></span>
                                 </div>
                                 
                                 <div class="form-group form-md-line-input has-info">
@@ -75,7 +74,6 @@
                                     <input type="number" class="form-control"  name="s_quantity" style="width: 11% ;float:left;margin-left:4%"
                                     value="{{isset($record->ProductSpecification[0]->s_quantity) ? $record->ProductSpecification[0]->s_quantity : old('s_quantity')}}" placeholder="Enter quantity">
                                     
-                                    <span class="help-block"><small class="text-danger">{{ $errors->first('brand_id') }}</small></span>
                                 </div>
 
                                 <div class="form-group form-md-line-input has-info">
@@ -84,7 +82,6 @@
                                     <input type="number" class="form-control"  name="m_quantity" style="width: 11% ;float:left;margin-left:4%"
                                     value="{{isset($record->ProductSpecification[0]->m_quantity) ? $record->ProductSpecification[0]->m_quantity : old('m_quantity')}}" placeholder="Enter quantity">
                                     
-                                    <span class="help-block"><small class="text-danger">{{ $errors->first('brand_id') }}</small></span>
                                 </div>
 
                                 <div class="form-group form-md-line-input has-info">
@@ -93,7 +90,6 @@
                                     <input type="number" class="form-control"  name="l_quantity" style="width: 11% ;float:left;margin-left:4%"
                                     value="{{isset($record->ProductSpecification[0]->l_quantity) ? $record->ProductSpecification[0]->l_quantity : old('xs_quantity')}}" placeholder="Enter quantity">
                                     
-                                    <span class="help-block"><small class="text-danger">{{ $errors->first('brand_id') }}</small></span>
                                 </div>
 
                                 <div class="form-group form-md-line-input has-info">
@@ -102,7 +98,6 @@
                                     <input type="number" class="form-control"  name="xl_quantity" style="width: 11% ;float:left;margin-left:4%"
                                     value="{{isset($record->ProductSpecification[0]->xl_quantity) ? $record->ProductSpecification[0]->xl_quantity : old('xl_quantity')}}" placeholder="Enter quantity">
                                     
-                                    <span class="help-block"><small class="text-danger">{{ $errors->first('brand_id') }}</small></span>
                                 </div>
 
                                 <div class="form-group form-md-line-input has-info">
@@ -111,7 +106,6 @@
                                     <input type="number" class="form-control"  name="xxl_quantity" style="width: 11% ;float:left;margin-left:4%"
                                     value="{{isset($record->ProductSpecification[0]->xxl_quantity) ? $record->ProductSpecification[0]->xxl_quantity : old('xxl_quantity')}}" placeholder="Enter quantity">
                                     
-                                    <span class="help-block"><small class="text-danger">{{ $errors->first('brand_id') }}</small></span>
                                 </div>
 
                                 <div class="form-group form-md-line-input {{ $errors->has('image') ? ' has-error' : '' }}">
@@ -121,9 +115,10 @@
                                         <a href="/{{GRAPHIC_UPLOAD_PATH.$record->type.'/'.$record->image }}?{{time()}}" data-fancybox="images"><i class="icon-magnifier"></i></a>
                                     </span>
                                     @endif
-                                    <input class="form-control" name="images[]" type="file" multiple>
+                                    <input id="gallery-photo-add" class="form-control" name="images[]" type="file" multiple>
                                     <span class="help-block" id="hint-block"><small class="text-danger">{{ $errors->first('image') }}</small></span>
                                 </div>
+                                <div class="gallery"></div>
 
 
                                 <div class="form-group form-md-checkboxes">
@@ -159,6 +154,34 @@
 </div>
 @endsection
 @push('view-scripts')
+<script type="text/javascript">
+    $(function() {
+    // Multiple images preview in browser
+    var imagesPreview = function(input, placeToInsertImagePreview) {
 
+        if (input.files) {
+            var filesAmount = input.files.length;
+
+            for (i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    $($.parseHTML('<img>')).attr('src', event.target.result).attr('width', 100+'px').attr('height', 100+'px').attr('style', 'margin-right:10px').appendTo(placeToInsertImagePreview);
+                }
+
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+
+    };
+
+    $('#gallery-photo-add').on('change', function() {
+        imagesPreview(this, 'div.gallery');
+    });
+});
+
+
+
+</script>
 
 @endpush
