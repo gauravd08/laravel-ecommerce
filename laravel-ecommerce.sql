@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2019 at 04:43 PM
+-- Generation Time: Apr 27, 2019 at 05:10 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -21,6 +21,80 @@ SET time_zone = "+00:00";
 --
 -- Database: `laravel-ecommerce`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `brands`
+--
+
+CREATE TABLE `brands` (
+  `id` int(11) NOT NULL,
+  `brand_name` varchar(256) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `brands`
+--
+
+INSERT INTO `brands` (`id`, `brand_name`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'Abercrombie & Fitch', 0, '2019-04-12 16:20:18', '2019-04-25 14:49:05'),
+(2, 'Asos', 1, '2019-04-12 16:20:57', '2019-04-12 16:34:25'),
+(3, 'Bershka', 1, '2019-04-12 16:21:14', '2019-04-12 16:34:28'),
+(4, 'Missguided', 1, '2019-04-12 16:21:32', '2019-04-12 16:34:34'),
+(5, 'Zara', 1, '2019-04-12 16:21:46', '2019-04-12 16:34:31');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `carts`
+--
+
+CREATE TABLE `carts` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `size` int(11) NOT NULL,
+  `price` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `category_name` varchar(256) NOT NULL,
+  `description` varchar(1024) NOT NULL,
+  `slug` varchar(256) DEFAULT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` int(1) DEFAULT NULL,
+  `updated_by` int(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `parent_id`, `category_name`, `description`, `slug`, `is_active`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(1, 0, 'Men Clothing', 'This Section belongs to Men Clothing.', 'men-clothing', 1, '2019-04-12 09:53:15', '2019-04-12 09:53:15', 1, 1),
+(2, 0, 'Women Clothing', 'This section belongs to women clothing.', 'women-clothing', 1, '2019-04-12 09:54:06', '2019-04-12 09:54:06', 1, 1),
+(3, 2, 'Midi Dresses', 'This Section belongs to women midi dresses.', 'midi-dresses', 1, '2019-04-12 09:59:51', '2019-04-12 09:59:51', 1, 1),
+(4, 2, 'Maxi Dresses', 'This Section belongs to maxi dresses.', 'maxi-dresses', 1, '2019-04-12 10:00:46', '2019-04-12 10:00:46', 1, 1),
+(5, 2, 'Prom Dresses', 'This section belongs to prom dresses.', 'prom-dresses', 1, '2019-04-12 10:01:19', '2019-04-12 10:01:19', 1, 1),
+(6, 2, 'Little Black Dresses', 'This section belongs to little black dresses.', 'little-black-dresses', 1, '2019-04-12 10:02:13', '2019-04-12 10:02:13', 1, 1),
+(7, 2, 'Mini Dresses', 'This Section belongs to Mini Dresses.', 'mini-dresses', 1, '2019-04-12 10:02:56', '2019-04-12 10:02:56', 1, 1),
+(8, 1, 'jeans', 'good jeans', 'jeans', 1, '2019-04-27 05:46:35', '2019-04-27 05:46:35', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -74,6 +148,44 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `shipping_address` varchar(1024) NOT NULL,
+  `shipping_country` int(11) NOT NULL,
+  `shipping_zip` int(25) NOT NULL,
+  `shipping_phone` int(11) NOT NULL,
+  `billing_address` varchar(1024) NOT NULL,
+  `billling_country` int(11) NOT NULL,
+  `billing_zip` int(11) NOT NULL,
+  `billing_phone` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_details`
+--
+
+CREATE TABLE `order_details` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `size` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `password_resets`
 --
 
@@ -108,6 +220,91 @@ CREATE TABLE `permission_role` (
   `permission_id` int(10) UNSIGNED NOT NULL,
   `role_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
+  `product_name` varchar(256) NOT NULL,
+  `description` varchar(1024) NOT NULL,
+  `slug` varchar(256) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `brand_id` int(11) NOT NULL,
+  `price` float NOT NULL,
+  `image` varchar(256) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `product_name`, `description`, `slug`, `category_id`, `quantity`, `brand_id`, `price`, `image`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'blue stripped', 'good one', 'blue-stripped', 3, NULL, 5, 1000, '1.jpg', 1, '2019-04-13 15:47:18', '2019-04-25 14:55:43'),
+(4, 'blue jeans men', 'very cool', 'blue-jeans-men', 8, NULL, 1, 200, '4.jpg', 1, '2019-04-27 11:17:52', '2019-04-27 11:17:52');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_images`
+--
+
+CREATE TABLE `product_images` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `image` varchar(256) NOT NULL,
+  `display_order` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `product_images`
+--
+
+INSERT INTO `product_images` (`id`, `product_id`, `image`, `display_order`, `created_at`, `updated_at`) VALUES
+(1, 1, '1.jpg', 1, '2019-04-13 15:47:20', '2019-04-13 15:47:20'),
+(2, 1, '2.jpg', 2, '2019-04-13 15:47:20', '2019-04-13 15:47:20'),
+(3, 1, '3.jpg', 3, '2019-04-13 15:47:21', '2019-04-13 15:47:21'),
+(4, 1, '4.jpg', 4, '2019-04-13 15:47:22', '2019-04-13 15:47:22'),
+(9, 4, '1.jpg', 1, '2019-04-27 11:17:54', '2019-04-27 11:17:54'),
+(10, 4, '2.jpg', 2, '2019-04-27 11:17:56', '2019-04-27 11:17:56'),
+(11, 4, '3.jpg', 3, '2019-04-27 11:17:57', '2019-04-27 11:17:57'),
+(12, 4, '4.jpg', 4, '2019-04-27 11:17:57', '2019-04-27 11:17:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_specifications`
+--
+
+CREATE TABLE `product_specifications` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `xs_quantity` int(11) DEFAULT NULL,
+  `s_quantity` int(11) DEFAULT NULL,
+  `m_quantity` int(11) DEFAULT NULL,
+  `l_quantity` int(11) DEFAULT NULL,
+  `xl_quantity` int(11) DEFAULT NULL,
+  `xxl_quantity` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `product_specifications`
+--
+
+INSERT INTO `product_specifications` (`id`, `product_id`, `xs_quantity`, `s_quantity`, `m_quantity`, `l_quantity`, `xl_quantity`, `xxl_quantity`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 2, 3, 45, 5, 7, '2019-04-13 15:47:19', '2019-04-13 15:47:19'),
+(4, 4, 3, NULL, NULL, NULL, NULL, NULL, '2019-04-27 11:17:53', '2019-04-27 11:17:53');
 
 -- --------------------------------------------------------
 
@@ -185,6 +382,24 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 --
 
 --
+-- Indexes for table `brands`
+--
+ALTER TABLE `brands`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `carts`
+--
+ALTER TABLE `carts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `graphics`
 --
 ALTER TABLE `graphics`
@@ -194,6 +409,18 @@ ALTER TABLE `graphics`
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `order_details`
+--
+ALTER TABLE `order_details`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -215,6 +442,24 @@ ALTER TABLE `permissions`
 ALTER TABLE `permission_role`
   ADD PRIMARY KEY (`permission_id`,`role_id`),
   ADD KEY `permission_role_role_id_foreign` (`role_id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `product_images`
+--
+ALTER TABLE `product_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `product_specifications`
+--
+ALTER TABLE `product_specifications`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `roles`
@@ -242,6 +487,24 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `brands`
+--
+ALTER TABLE `brands`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `carts`
+--
+ALTER TABLE `carts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `graphics`
 --
 ALTER TABLE `graphics`
@@ -254,10 +517,40 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `order_details`
+--
+ALTER TABLE `order_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `product_images`
+--
+ALTER TABLE `product_images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `product_specifications`
+--
+ALTER TABLE `product_specifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `roles`
