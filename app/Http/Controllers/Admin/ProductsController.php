@@ -112,9 +112,9 @@ class ProductsController extends \App\Http\Controllers\Controller
 	{
         if($request->method() == 'POST')
         {
-            $this->rules['image'] = 'required|image|mimes:jpeg,png,jpg|dimensions:min_width=1000,min_height=1358';
+           // $this->rules['image'] = 'required|image|mimes:jpeg,png,jpg|dimensions:min_width=1000,min_height=1358';
 
-            //dd($request->images[0]);
+           // dd($request);
             $validator = Validator::make(Input::all(), $this->rules);
             $record = new Product();
             $record->product_name = $request->product_name;

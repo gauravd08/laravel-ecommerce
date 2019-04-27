@@ -78,3 +78,6 @@ Route::group(['prefix' => 'member', 'middleware' => ['role:member']], function()
 {
     
 });
+
+Route::get('/{slug}', 'Frontend\PagesController@page');
+Route::get('/product/{slug}', 'Frontend\PagesController@product');

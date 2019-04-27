@@ -35,3 +35,5 @@
 <!-- END THEME LAYOUT STYLES -->
 
 <link rel="shortcut icon" href="favicon.ico" /> 
+
+@stack('styles')

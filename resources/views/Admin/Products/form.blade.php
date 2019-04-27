@@ -1,5 +1,37 @@
 @extends('layouts.admin')
 
+@push('styles')
+<style>
+    
+    input[type="file"] {
+    display: block;
+    }
+    .imageThumb {
+    max-height: 75px;
+    border: 2px solid;
+    padding: 1px;
+    cursor: pointer;
+    }
+    .pip {
+    display: inline-block;
+    margin: 10px 10px 0 0;
+    }
+    .remove {
+    display: block;
+    background: #444;
+    border: 1px solid black;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    }
+    .remove:hover {
+    background: white;
+    color: black;
+    }
+</style>
+
+@endpush
+
 @section('content')
 <div class="page-content-wrapper">
     <!-- BEGIN CONTENT BODY -->
@@ -108,17 +140,12 @@
                                     
                                 </div>
 
-                                <div class="form-group form-md-line-input {{ $errors->has('image') ? ' has-error' : '' }}">
-                                    <label>Image</label>
-                                    @if(isset($record->image))
-                                    <span class="pull-right file-links">
-                                        <a href="/{{GRAPHIC_UPLOAD_PATH.$record->type.'/'.$record->image }}?{{time()}}" data-fancybox="images"><i class="icon-magnifier"></i></a>
+                                <div class="field" align="left">
+                                    <span>
+                                        <h3>Upload your images</h3>
+                                        <input type="file" id="files" name="images[]" multiple />
                                     </span>
-                                    @endif
-                                    <input id="gallery-photo-add" class="form-control" name="images[]" type="file" multiple>
-                                    <span class="help-block" id="hint-block"><small class="text-danger">{{ $errors->first('image') }}</small></span>
                                 </div>
-                                <div class="gallery"></div>
 
 
                                 <div class="form-group form-md-checkboxes">
@@ -155,29 +182,38 @@
 @endsection
 @push('view-scripts')
 <script type="text/javascript">
-    $(function() {
-    // Multiple images preview in browser
-    var imagesPreview = function(input, placeToInsertImagePreview) {
-
-        if (input.files) {
-            var filesAmount = input.files.length;
-
-            for (i = 0; i < filesAmount; i++) {
-                var reader = new FileReader();
-
-                reader.onload = function(event) {
-                    $($.parseHTML('<img>')).attr('src', event.target.result).attr('width', 100+'px').attr('height', 100+'px').attr('style', 'margin-right:10px').appendTo(placeToInsertImagePreview);
-                }
-
-                reader.readAsDataURL(input.files[i]);
-            }
-        }
-
-    };
-
-    $('#gallery-photo-add').on('change', function() {
-        imagesPreview(this, 'div.gallery');
+    $(document).ready(function() {
+  if (window.File && window.FileList && window.FileReader) {
+    $("#files").on("change", function(e) {
+      var files = e.target.files,
+        filesLength = files.length;
+      for (var i = 0; i < filesLength; i++) {
+        var f = files[i]
+        var fileReader = new FileReader();
+        fileReader.onload = (function(e) {
+          var file = e.target;
+          $("<span class=\"pip\">" +
+            "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+            "<br/><span class=\"remove\">Remove image</span>" +
+            "</span>").insertAfter("#files");
+          $(".remove").click(function(){
+            $(this).parent(".pip").remove();
+          });
+          
+          // Old code here
+          /*$("<img></img>", {
+            class: "imageThumb",
+            src: e.target.result,
+            title: file.name + " | Click to remove"
+          }).insertAfter("#files").click(function(){$(this).remove();});*/
+          
+        });
+        fileReader.readAsDataURL(f);
+      }
     });
+  } else {
+    alert("Your browser doesn't support to File API")
+  }
 });
 
 
