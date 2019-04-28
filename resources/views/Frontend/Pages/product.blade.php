@@ -47,8 +47,14 @@
 				</div>
 				<div class="col-lg-6 product-details">
 					<h2 class="p-title">White peplum top</h2>
-					<h3 class="p-price">$39.90</h3>
-					<h4 class="p-stock">Available: <span>In Stock</span></h4>
+					<h3 class="p-price">&#8377;{{ $record[0]->price }}</h3>
+					<h4 class="p-stock">Available: 
+						@if ($totalStock > 0)
+							<span>In Stock</span>	
+						@else
+							<span>Out of Stock</span>
+						@endif
+					</h4>
 					<div class="p-rating">
 						<i class="fa fa-star-o"></i>
 						<i class="fa fa-star-o"></i>
@@ -59,38 +65,94 @@
 					<div class="p-review">
 						<a href="">3 reviews</a>|<a href="">Add your review</a>
 					</div>
+					{{ Form::open(['method' => 'POST','url' => '/cart']) }}
 					<div class="fw-size-choose">
 						<p>Size</p>
-						<div class="sc-item">
-							<input type="radio" name="sc" id="xs-size">
-							<label for="xs-size">32</label>
-						</div>
-						<div class="sc-item">
-							<input type="radio" name="sc" id="s-size">
-							<label for="s-size">34</label>
-						</div>
-						<div class="sc-item">
-							<input type="radio" name="sc" id="m-size" checked="">
-							<label for="m-size">36</label>
-						</div>
-						<div class="sc-item">
-							<input type="radio" name="sc" id="l-size">
-							<label for="l-size">38</label>
-						</div>
-						<div class="sc-item disable">
-							<input type="radio" name="sc" id="xl-size" disabled>
-							<label for="xl-size">40</label>
-						</div>
-						<div class="sc-item">
-							<input type="radio" name="sc" id="xxl-size">
-							<label for="xxl-size">42</label>
-						</div>
+						@if ($record[0]->ProductSpecification[0]->xs_quantity > 0)
+							<div class="sc-item">
+								<input type="radio" name="size" id="xs-size" value='xs'>
+								<label for="xs-size">32</label>
+							</div>
+						@else
+							<div class="sc-item disable">
+								<input type="radio" name="size" id="xs-size" disabled>
+								<label for="xs-size">32</label>
+							</div>
+						@endif
+						
+						@if ($record[0]->ProductSpecification[0]->s_quantity > 0)
+							<div class="sc-item">
+								<input type="radio" name="size" id="s-size" value='s'>
+								<label for="s-size">34</label>
+							</div>
+						@else
+							<div class="sc-item disable">
+								<input type="radio" name="size" id="s-size" disabled>
+								<label for="s-size">34</label>
+							</div>
+						@endif
+						
+						@if ($record[0]->ProductSpecification[0]->m_quantity > 0)
+							<div class="sc-item">
+								<input type="radio" name="size" id="m-size" value='m'>
+								<label for="m-size">36</label>
+							</div>
+						@else
+							<div class="sc-item disable">
+								<input type="radio" name="size" id="m-size" disabled>
+								<label for="m-size">36</label>
+							</div>
+						@endif
+						
+						@if ($record[0]->ProductSpecification[0]->l_quantity > 0)
+							<div class="sc-item">
+								<input type="radio" name="size" id="l-size" value='l'>
+								<label for="l-size">38</label>
+							</div>	
+						@else
+							<div class="sc-item disable">
+								<input type="radio" name="size" id="l-size" disabled>
+								<label for="l-size">38</label>
+							</div>
+						@endif
+						
+						@if ($record[0]->ProductSpecification[0]->xl_quantity > 0)
+							<div class="sc-item">
+								<input type="radio" name="size" id="xl-size" value='xl'>
+								<label for="xl-size">40</label>
+							</div>	
+						@else
+							<div class="sc-item disable">
+								<input type="radio" name="size" id="xl-size" disabled>
+								<label for="xl-size">40</label>
+							</div>
+						@endif
+						
+						@if ($record[0]->ProductSpecification[0]->xl_quantity > 0)
+							<div class="sc-item">
+								<input type="radio" name="xxl" id="xxl-size" value='xxl'>
+								<label for="xxl-size">42</label>
+							</div>	
+						@else
+							<div class="sc-item disable">
+								<input type="radio" name="xxl" id="xxl-size" disabled>
+								<label for="xxl-size">42</label>
+							</div>
+						@endif
+						
 					</div>
 					<div class="quantity">
 						<p>Quantity</p>
-                        <div class="pro-qty"><input type="text" value="1"></div>
-                    </div>
-					<a href="#" class="site-btn">SHOP NOW</a>
+                        <div class="pro-qty"><input type="text" value="1" name="quantity"></div>
+					</div>
+
+					<input type="hidden" name="product_id" value="{{ $record[0]->id }}">
+
+					<input type="hidden" name="price" value="{{ $record[0]->price }}">
+
+					<button type="submit" class="site-btn">SHOP NOW</button>
+					
+					{{ Form::close() }}
 					<div id="accordion" class="accordion-area">
 						<div class="panel">
 							<div class="panel-header" id="headingOne">

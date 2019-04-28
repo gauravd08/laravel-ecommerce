@@ -46,11 +46,11 @@ class PagesController extends \App\Http\Controllers\Controller
 
     public function product($slug)
     {
-        $record = Product::with('ProductImage')->where('slug', $slug)->get();
-       // dd($record[0]->ProductImage);
-        return view('Frontend.pages.product')->with(compact('record'));
-        
+        $record = Product::with('ProductImage', 'ProductSpecification')->where('slug', $slug)->get();
+
+        $totalStock = $record[0]->ProductSpecification[0]->xs_quantity + $record[0]->ProductSpecification[0]->s_quantity + $record[0]->ProductSpecification[0]->m_quantity + $record[0]->ProductSpecification[0]->l_quantity
+                        + $record[0]->ProductSpecification[0]->xl_quantity + $record[0]->ProductSpecification[0]->xxl_quantity;
+                    
+        return view('Frontend.pages.product')->with(compact('record', 'totalStock'));   
     }
-
-
 }

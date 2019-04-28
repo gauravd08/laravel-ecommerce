@@ -151,10 +151,9 @@
                         <div class="col-lg-4 col-sm-6">
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <a href="/product/{{ $record->slug }}">
                                     <img src="/assets/frontend/img/products/{{ $record->image }}" alt="">
                                     <div class="pi-links">
-                                        <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                        <a href="/product/{{ $record->slug }}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                                         <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
                                     </div>
                                 </div>
