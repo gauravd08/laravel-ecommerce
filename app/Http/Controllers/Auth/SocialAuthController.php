@@ -74,11 +74,11 @@ class SocialAuthController extends \App\Http\Controllers\Controller
     {
         // check if they're an existing user
         $existingUser = User::where('email', $user->email)->first();
-        
+       
         if($existingUser)
         {
             // log them in
-            Auth::attempt(['email' => $existingUser->email, 'password' => $existingUser->password]);
+            auth()->login($existingUser, true);
         } 
         else 
         {
@@ -94,7 +94,7 @@ class SocialAuthController extends \App\Http\Controllers\Controller
             $newUser->attachRole($member);
             
             //log them in
-            Auth::attempt(['email' => $newUser->email, 'password' => $newUser->password]);
+            auth()->login($newUser, true);
         }
     }
 

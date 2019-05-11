@@ -8,10 +8,19 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Image;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
+use App\Models\Cart;
+use Illuminate\Support\Facades\Auth;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function __construct() 
+    {
+        $cartCount = $this->_cartCount();
+        View::share('cartCount', $cartCount);
+    }
 
     /**
      * Resizes and upload image
@@ -85,5 +94,23 @@ class Controller extends BaseController
             $slug = strtolower($name);
         }
         return $slug;
+    }
+
+    /**
+     * get cart count
+     */
+    private function _cartCount()
+    {
+        if(Auth::check())
+        {
+            echo "hi";exit;
+            $count = Cart::where('user_id', Auth::user()->id)->count();
+        }
+        else
+        {
+            $count = 50;
+        }
+        
+        return $count;
     }
 }

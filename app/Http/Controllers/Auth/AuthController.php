@@ -216,5 +216,15 @@ class AuthController extends \App\Http\Controllers\Controller
     public function memberLogin()
     {
         return view('Auth.memberlogin');
-    }    
+    }
+    
+    /**
+     * Performs logout in member section.
+     * @return type
+     */
+    public function memberLogout()
+    {
+        Auth::logout();
+        return redirect('/');
+    }
 }

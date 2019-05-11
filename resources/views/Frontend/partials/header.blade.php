@@ -24,14 +24,18 @@
 					<div class="user-panel">
 						<div class="up-item">
 							<i class="flaticon-profile"></i>
-							<a id="memberpopup" href="/member">Sign In or Create Account</a>
+							@if (Auth::check())
+								Hi ,{{ Auth::user()->name }}
+							@else
+								<a id="memberpopup" href="/member">Sign In or Create Account</a>
+							@endif
 						</div>
 						<div class="up-item">
 							<div class="shopping-card">
 								<i class="flaticon-bag"></i>
-								<span>0</span>
+								<span>{{ $cartCount }}</span>
 							</div>
-							<a href="#">Shopping Cart</a>
+							<a href="/cart">Shopping Cart</a>
 						</div>
 					</div>
 				</div>

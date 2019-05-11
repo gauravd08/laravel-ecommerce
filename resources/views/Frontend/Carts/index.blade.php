@@ -32,31 +32,33 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $total = 0; ?>
+                            @foreach ($records as $record)
+                            <?php $total += $record->price ?>
                             <tr>
-                                @foreach ($records as $record)
-                                    <td class="product-col">
-                                        <img src="/assets/frontend/img/products/{{ $record->Product->image }}" width="81" height="80" alt="">
-                                        <div class="pc-title">
-                                            <h4>{{ $record->Product->product_name }}</h4>
-                                            <p>&#8377;{{ $record->price }}</p>
+                                <td class="product-col">
+                                    <img src="/assets/frontend/img/products/{{ $record->Product->image }}" width="81" height="80" alt="">
+                                    <div class="pc-title">
+                                        <h4>{{ $record->Product->product_name }}</h4>
+                                        <p>&#8377;{{ $record->Product->price }}</p>
+                                    </div>
+                                </td>
+                                <td class="quy-col">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <input type="text" name="quantity" id="{{ $record->id }}" value="{{ $record->quantity }}">
                                         </div>
-                                    </td>
-                                    <td class="quy-col">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="size-col"><h4>Size {{ $record->size }}</h4></td>
-                                    <td class="total-col"><h4>&#8377;{{ $record->price }}</h4></td>
-                                @endforeach
+                                    </div>
+                                </td>
+                                <td class="size-col"><h4>Size {{ $record->size }}</h4></td>
+                                <td class="total-col"><h4>&#8377;{{ $record->price }}</h4></td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                     </div>
                     <div class="total-cost">
-                        <h6>Total <span>$99.90</span></h6>
+                        <h6>Total <span>&#8377;{{ $total }}</span></h6>
                     </div>
                 </div>
             </div>
@@ -65,7 +67,7 @@
                     <input type="text" placeholder="Enter promo code">
                     <button>Submit</button>
                 </form>
-                <a href="" class="site-btn">Proceed to checkout</a>
+                <a href="/checkout" class="site-btn">Proceed to checkout</a>
                 <a href="" class="site-btn sb-dark">Continue shopping</a>
             </div>
         </div>
@@ -131,7 +133,7 @@
                     <div class="pi-pic">
                         <img src="./img/product/1.jpg" alt="">
                         <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                            <a href="cart" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                             <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
                         </div>
                     </div>
@@ -148,3 +150,33 @@
 
 
 @endsection
+
+@push('view-scripts');
+<script type="text/javascript">
+	$(".qtybtn").on("click", function () 
+    {
+        //find cart id of clicked row
+        var cartId = $(this).parent().find('input').attr('id');
+        //find value of clicked row
+        var quantity = $(this).parent().find('input').val();
+       
+        if($(this).hasClass("inc"))
+        {
+            quantity = parseInt(quantity) + 1;
+        }
+        else if($(this).hasClass("dec"))
+        {
+            quantity = parseInt(quantity) - 1;
+        }
+        
+        $.ajax({
+            type:'GET',
+            url:'/update-cart/'+ cartId + '/' + quantity,
+            success:function(data)
+            {
+                location.reload();
+            }
+		});
+    });
+</script>
+@endpush;

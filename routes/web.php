@@ -22,6 +22,7 @@ Route::post('login', 'Auth\AuthController@login');
 Route::get('logout', 'Auth\AuthController@logout');
 
 Route::get('member', 'Auth\AuthController@memberLogin');
+Route::get('memberLogout', 'Auth\AuthController@memberLogout');
 
 //Login with google
 Route::get('login/google', 'Auth\SocialAuthController@redirectToGoogle');
@@ -80,5 +81,10 @@ Route::group(['prefix' => 'member', 'middleware' => ['role:member']], function()
 });
 
 Route::any('/cart', 'Frontend\CartsController@index');
+Route::post('/add-to-cart', 'Frontend\CartsController@addToCart');
+Route::get('/update-cart/{cartId}/{quantity}', 'Frontend\CartsController@updateCart');
+Route::get('/checkout', 'Frontend\CheckoutController@index');
+Route::get('/payment', 'Frontend\CheckoutController@paymentPopup');
+Route::post('/process-stripe-payment', 'Frontend\CheckoutController@processStripePayment');
 Route::get('/{slug}', 'Frontend\PagesController@page');
 Route::get('/product/{slug}', 'Frontend\PagesController@product');

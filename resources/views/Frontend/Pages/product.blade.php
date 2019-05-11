@@ -130,12 +130,12 @@
 						
 						@if ($record[0]->ProductSpecification[0]->xl_quantity > 0)
 							<div class="sc-item">
-								<input type="radio" name="xxl" id="xxl-size" value='xxl'>
+								<input type="radio" name="size" id="xxl-size" value='xxl'>
 								<label for="xxl-size">42</label>
 							</div>	
 						@else
 							<div class="sc-item disable">
-								<input type="radio" name="xxl" id="xxl-size" disabled>
+								<input type="radio" name="size" id="xxl-size" disabled>
 								<label for="xxl-size">42</label>
 							</div>
 						@endif
@@ -150,7 +150,7 @@
 
 					<input type="hidden" name="price" value="{{ $record[0]->price }}">
 
-					<button type="submit" class="site-btn">SHOP NOW</button>
+					<button type="submit" class="site-btn add-cart">SHOP NOW</button>
 					
 					{{ Form::close() }}
 					<div id="accordion" class="accordion-area">
@@ -285,3 +285,28 @@
 
 
 @endsection
+
+@push('view-scripts');
+<script type="text/javascript">
+	$(".add-cart").click(function(e){
+		e.preventDefault();
+		var product_id = {{ $record[0]->id }} ;
+		var quantity = $("input[name=quantity]").val();
+		var price = {{ $record[0]->price }};
+		var size = $("input[name=size]").val();
+		alert(quantity);
+		$.ajax({
+			type:'POST',
+			url:'/add-to-cart',
+			data:{product_id:product_id, quantity:quantity, price:price, size:size},
+			success:function(data)
+			{
+				console.log(data);
+				location.href = "/cart";
+			}
+
+		});
+
+	});
+</script>
+@endpush;
