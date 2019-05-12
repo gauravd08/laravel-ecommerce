@@ -53,3 +53,9 @@ define('PORTFOLIOSIMAGES','assets/frontend/uploads/portfoliosimages');
 
 //Graphic Types
 define('GRAPHIC_TYPE_HOME_BANNER', 1);
+
+//Stripe Payment Status
+define('STRIPE_PAYMENT_SUCCESS', 'succeeded');
+
+//Order statuses
+define('ORDER_PLACED', 1);

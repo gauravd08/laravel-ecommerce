@@ -70,7 +70,7 @@
 						<p>Size</p>
 						@if ($record[0]->ProductSpecification[0]->xs_quantity > 0)
 							<div class="sc-item">
-								<input type="radio" name="size" id="xs-size" value='xs'>
+								<input type="radio" name="size" id="xs-size" class="size-class" value='xs' checked>
 								<label for="xs-size">32</label>
 							</div>
 						@else
@@ -82,7 +82,7 @@
 						
 						@if ($record[0]->ProductSpecification[0]->s_quantity > 0)
 							<div class="sc-item">
-								<input type="radio" name="size" id="s-size" value='s'>
+								<input type="radio" name="size" id="s-size" class="size-class" value='s'>
 								<label for="s-size">34</label>
 							</div>
 						@else
@@ -94,7 +94,7 @@
 						
 						@if ($record[0]->ProductSpecification[0]->m_quantity > 0)
 							<div class="sc-item">
-								<input type="radio" name="size" id="m-size" value='m'>
+								<input type="radio" name="size" id="m-size" class="size-class" value='m'>
 								<label for="m-size">36</label>
 							</div>
 						@else
@@ -106,7 +106,7 @@
 						
 						@if ($record[0]->ProductSpecification[0]->l_quantity > 0)
 							<div class="sc-item">
-								<input type="radio" name="size" id="l-size" value='l'>
+								<input type="radio" name="size" id="l-size" class="size-class" value='l'>
 								<label for="l-size">38</label>
 							</div>	
 						@else
@@ -118,7 +118,7 @@
 						
 						@if ($record[0]->ProductSpecification[0]->xl_quantity > 0)
 							<div class="sc-item">
-								<input type="radio" name="size" id="xl-size" value='xl'>
+								<input type="radio" name="size" id="xl-size" class="size-class" value='xl'>
 								<label for="xl-size">40</label>
 							</div>	
 						@else
@@ -130,7 +130,7 @@
 						
 						@if ($record[0]->ProductSpecification[0]->xl_quantity > 0)
 							<div class="sc-item">
-								<input type="radio" name="size" id="xxl-size" value='xxl'>
+								<input type="radio" name="size" id="xxl-size" class="size-class" value='xxl'>
 								<label for="xxl-size">42</label>
 							</div>	
 						@else
@@ -288,17 +288,25 @@
 
 @push('view-scripts');
 <script type="text/javascript">
+	var size = 'xs';
+	
+	//set size on click
+	$(".size-class").click(function(e)
+	{
+		size = $(this).val();
+	});
+
+
 	$(".add-cart").click(function(e){
 		e.preventDefault();
 		var product_id = {{ $record[0]->id }} ;
 		var quantity = $("input[name=quantity]").val();
 		var price = {{ $record[0]->price }};
-		var size = $("input[name=size]").val();
-		alert(quantity);
+		var finalPrice = parseInt(price) * parseInt(quantity);
 		$.ajax({
 			type:'POST',
 			url:'/add-to-cart',
-			data:{product_id:product_id, quantity:quantity, price:price, size:size},
+			data:{product_id:product_id, quantity:quantity, price:finalPrice, size:size},
 			success:function(data)
 			{
 				console.log(data);

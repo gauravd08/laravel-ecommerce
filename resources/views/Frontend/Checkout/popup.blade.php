@@ -92,10 +92,9 @@
   
                         <div class="row">
                             <div class="col-xs-12">
-                                <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now ($100)</button>
+                                <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now (&#8377;{{ $amount }})</button>
                             </div>
                         </div>
-                          
                     </form>
                 </div>
             </div>        

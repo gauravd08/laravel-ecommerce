@@ -36,6 +36,21 @@ class CartsController extends \App\Http\Controllers\Controller
             //if auth is set
             if(Auth::check())
             {
+                //check if product is already in cart
+                $productInCart = Cart::where('product_id', $request->product_id)
+                                ->where('user_id',Auth::user()->id)
+                                ->where('size',$request->size)
+                                ->get();
+                if(!$productInCart->isEmpty())
+                {
+                    $product = Product::find($productInCart[0]->product_id);
+                    $productInCart[0]->quantity = $productInCart[0]->quantity + $request->quantity;
+                    $productInCart[0]->price = $productInCart[0]->quantity * $product->price;
+                    $productInCart[0]->save();
+
+                    return response(['status' => 1, 'data' => 'Quantity updated']);
+                }
+                
                 $record = new Cart();
                 $record->fill(Input::all());
                 $record->user_id = Auth::user()->id;
